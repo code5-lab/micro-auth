@@ -1,6 +1,7 @@
 package pt.code5.micro.auth.users.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.bson.Document;
@@ -8,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import pt.code5.micro.auth.users.views.Views;
 
 import java.util.Map;
 
@@ -28,8 +30,13 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @JsonView(Views.Public.class)
     private Map properties;
+
+    @JsonView(Views.Private.class)
     private Map privateProperties;
+
+    @JsonView(Views.Secret.class)
     private Map secretProperties;
 
 
