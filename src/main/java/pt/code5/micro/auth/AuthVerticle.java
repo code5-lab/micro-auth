@@ -14,6 +14,7 @@ public class AuthVerticle extends AbstractVerticle {
     @Override
     public void start() throws Exception {
         super.start();
+        System.out.println("ok");
         VertxManager.getInstance().boot(vertx);
         Config.getInstance().boot(this::boot);
     }
