@@ -1,0 +1,15 @@
+{
+  "auth_mongo": {
+    "host": "mongo",
+    "port": 27017,
+    "database": "micro-auth"
+  },
+  "http": {
+    "port": 8080,
+    "keyStore": {
+      "path": "keystore.jks",
+      "type": "jks",
+      "password": "@00key00@"
+    }
+  }
+}

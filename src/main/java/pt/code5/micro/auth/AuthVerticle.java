@@ -1,7 +1,7 @@
 package pt.code5.micro.auth;
 
 import io.vertx.core.AbstractVerticle;
-import pt.code5.micro.auth.routers.RoutesManager;
+import pt.code5.micro.auth.requests.RouterManager;
 import pt.code5.micro.utils.Config;
 import pt.code5.micro.utils.database.MorphiaManager;
 import pt.code5.micro.utils.vertx.VertxManager;
@@ -22,9 +22,7 @@ public class AuthVerticle extends AbstractVerticle {
     private void boot(Boolean b) {
         MorphiaManager.getInstance().boot(this.getClass().getPackage(), "auth_mongo", event -> {
             System.out.println("Morphia Booted");
-        });
-        RoutesManager.getInstance().boot(event -> {
-            System.out.println("Routes Booted");
+            RouterManager.getInstance().boot(e2 -> System.out.println("Routes Booted"));
         });
     }
 }

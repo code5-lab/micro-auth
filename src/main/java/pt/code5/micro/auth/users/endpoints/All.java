@@ -3,6 +3,7 @@ package pt.code5.micro.auth.users.endpoints;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.ext.web.RoutingContext;
+import pt.code5.micro.auth.requests.Endpoint;
 import pt.code5.micro.auth.users.dao.UserDAO;
 import pt.code5.micro.auth.users.entities.User;
 import pt.code5.micro.auth.users.views.Views;
@@ -12,9 +13,10 @@ import java.util.List;
 /**
  * Created by eduardo on 17/03/2017.
  */
-public class All {
+public class All extends Endpoint {
 
     public All(RoutingContext routingContext) {
+        super(routingContext);
         System.out.println("all");
         List<User> users = UserDAO.getInstance().find().asList();
 

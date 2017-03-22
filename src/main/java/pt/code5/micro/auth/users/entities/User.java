@@ -1,17 +1,19 @@
 package pt.code5.micro.auth.users.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import pt.code5.micro.auth.users.views.Views;
 
+import java.time.LocalTime;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by eduardo on 17/03/2017.
@@ -26,6 +28,12 @@ public class User {
     private String username;
     private String name;
     private String email;
+
+    private boolean active;
+    @JsonIgnore
+    private String activationToken = UUID.randomUUID().toString();
+    @JsonIgnore
+    private LocalTime activationRequestTime;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -84,7 +92,7 @@ public class User {
         return privateProperties;
     }
 
-    public void setPrivateProperties(Document privateProperties) {
+    public void setPrivateProperties(Map privateProperties) {
         this.privateProperties = privateProperties;
     }
 
@@ -102,6 +110,26 @@ public class User {
 
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getActivationToken() {
+        return activationToken;
+    }
+
+    public LocalTime getActivationRequestTime() {
+        return activationRequestTime;
+    }
+
+    public void setActivationRequestTime(LocalTime activationRequestTime) {
+        this.activationRequestTime = activationRequestTime;
     }
 
     public void merge(User other) {

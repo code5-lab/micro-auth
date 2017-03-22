@@ -30,20 +30,24 @@ public class Seed {
                 u1.setName("User 1");
                 u1.setEmail("user@domail.tld");
                 u1.setUsername("th3Us3r");
+                u1.setPassword("1234");
+                u1.setActive(true);
 
 
                 u1.setProperties(new JsonObject().put("address", new JsonArray().add(1).add(1).add(1).add(1).add(1).getList()).put("sdad", new JsonObject().put("asdad", "dadasd")).mapTo(Document.class));
+                u1.setPrivateProperties(new JsonObject().put("address", new JsonArray().add(1).add(1).add(1).add(1).add(1).getList()).put("sdad", new JsonObject().put("asdad", "dadasd")).mapTo(Document.class));
+                u1.setSecretProperties(new JsonObject().put("address", new JsonArray().add(1).add(1).add(1).add(1).add(1).getList()).put("sdad", new JsonObject().put("asdad", "dadasd")).mapTo(Document.class));
 
                 userDAO.save(u1);
 
-                String str = Json.encode(u1);
+         /*       String str = Json.encode(u1);
 
                 System.out.println(str);
 
                 User u2 = Json.decodeValue(str, User.class);
                 u2.setId(new ObjectId());
                 userDAO.save(u2);
-                userDAO.get(u2.getId());
+                userDAO.get(u2.getId());*/
                 System.exit(0);
             });
         });
