@@ -11,10 +11,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
-import pt.code5.micro.auth.users.endpoints.All;
-import pt.code5.micro.auth.users.endpoints.Auth;
-import pt.code5.micro.auth.users.endpoints.Me;
-import pt.code5.micro.auth.users.endpoints.Register;
+import pt.code5.micro.auth.users.endpoints.*;
 import pt.code5.micro.utils.Config;
 import pt.code5.micro.utils.vertx.VertxManager;
 
@@ -49,7 +46,13 @@ public class RouterManager {
                 .allowedHeader("Authorization"));
 
         Config.getInstance().getConfig("http", config -> {
-            JsonObject result = config.getJsonObject("result");
+            if(config.failed()){
+                System.err.println("keyStore::" + config.cause());
+                System.exit(-1);
+            }
+            JsonObject result = config.result().getJsonObject("result");
+
+
             JsonObject cfg = new JsonObject()
                     .put("permissionsClaimKey", "roles")
                     .put("keyStore", result.getJsonObject("keyStore"));
@@ -66,9 +69,6 @@ public class RouterManager {
                 future.complete(true);
             }, onComplete);
 
-        }, event -> {
-            System.err.println("keyStore::" + event.getString("reason"));
-            System.exit(-1);
         });
 
     }
@@ -76,6 +76,7 @@ public class RouterManager {
     private void addEndPoints() {
         //this.router.routeWithRegex("/api/.*").handler(JWTAuthHandler.create(authProvider));
         this.router.post("/auth").consumes("application/json").produces("application/json").handler(Auth::new);
+        this.router.get("/recover").consumes("application/json").handler(Recover::new);
         this.router.post("/api/register").consumes("application/json").produces("application/json").handler(Register::new);
         this.router.get("/api/me").produces("application/json").handler(Me::new);
         this.router.get("/api/users").produces("application/json").handler(All::new);

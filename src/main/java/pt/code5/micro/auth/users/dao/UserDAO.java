@@ -25,7 +25,7 @@ public class UserDAO extends BasicDAO<User, ObjectId> {
     }
 
 
-    public User userForValues(Map<String, String> values) {
+    public User getUserFromValues(Map<String, String> values) {
         Query<User> q = getDatastore().createQuery(User.class);
         values.values().removeIf(Objects::isNull);
         if (values.size() == 0) return null;

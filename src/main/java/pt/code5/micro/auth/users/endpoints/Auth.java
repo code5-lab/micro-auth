@@ -28,7 +28,7 @@ public class Auth extends Endpoint {
         values.put("username", json.getString("username"));
         values.put("email", json.getString("email"));
 
-        User user = userDAO.userForValues(values);
+        User user = userDAO.getUserFromValues(values);
 
         if (user == null || !BCrypt.checkpw(routingContext.getBodyAsJson().getString("password"), user.getPassword())) {
             routingContext.response().setStatusCode(401).end();
