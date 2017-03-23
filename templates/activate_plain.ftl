@@ -1,0 +1,1 @@
+${context.callback_url}/activate/${context.user_token}

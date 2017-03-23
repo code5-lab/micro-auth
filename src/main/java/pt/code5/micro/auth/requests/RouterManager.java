@@ -74,9 +74,11 @@ public class RouterManager {
     }
 
     private void addEndPoints() {
-        //this.router.routeWithRegex("/api/.*").handler(JWTAuthHandler.create(authProvider));
+        this.router.routeWithRegex("/api/.*").handler(JWTAuthHandler.create(authProvider));
         this.router.post("/auth").consumes("application/json").produces("application/json").handler(Auth::new);
-        this.router.get("/recover").consumes("application/json").handler(Recover::new);
+        this.router.post("/register").consumes("application/json").produces("application/json").handler(Register::new);
+        this.router.get("/activate/:token").handler(Activate::new);
+        //this.router.get("/recover").consumes("application/json").handler(Recover::new);
         this.router.post("/api/register").consumes("application/json").produces("application/json").handler(Register::new);
         this.router.get("/api/me").produces("application/json").handler(Me::new);
         this.router.get("/api/users").produces("application/json").handler(All::new);
